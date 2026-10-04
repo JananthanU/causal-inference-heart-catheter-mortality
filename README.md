@@ -4,7 +4,7 @@ Does a right heart catheter on the first day of intensive care raise 30-day mort
 
 `Python` `Causal Inference` `Causal Forest` `EconML` `AIPW` `IPW` `Sensitivity Analysis`
 
-Work in progress. Step 1 is in progress, the analysis follows the eight steps below.
+Work in progress, currently at Step 1 of the eight steps below.
 
 ---
 
