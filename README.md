@@ -4,7 +4,7 @@ Does a right heart catheter on the first day of intensive care raise 30-day mort
 
 `Python` `Causal Inference` `Causal Forest` `EconML` `AIPW` `IPW` `Sensitivity Analysis`
 
-Work in progress. Setup and data loading are done, the analysis follows the eight steps below.
+Work in progress. Step 1 is in progress, the analysis follows the eight steps below.
 
 ---
 
@@ -19,7 +19,7 @@ Connors et al. found higher 30-day mortality among patients who received a cathe
 
 ## Approach
 
-The notebook follows the same eight-step pipeline as my [smoking cessation project](https://github.com/JananthanU/causal-inference-smoking-weight).
+The notebook follows an eight-step causal ML pipeline.
 
 | Step | Plan |
 |---|---|
