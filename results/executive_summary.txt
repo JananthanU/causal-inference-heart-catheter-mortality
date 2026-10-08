@@ -1,0 +1,18 @@
+
+MAIN IDEA
+  After adjusting for 50 covariates from day 1, a right heart catheter goes with 3.5 percentage points
+  higher 30-day mortality, 95% CI 1.0 to 6.1.
+  There is no reliable evidence that it differs between patients: calibration beta = 0.24, one-sided p = 0.39; RATE not significant; best linear projection without significant slopes.
+
+KEY LINE 1: the raw comparison overstates the harm
+  Raw difference 7.4 pp. Catheter patients were sicker, the largest ASMD before weighting is
+  0.35, after overlap weighting every ASMD is below 0.013.
+
+KEY LINE 2: the size depends on the model, the direction does not
+  4 adjusted estimators between 3.5 and 6.8 pp, all point estimates above zero.
+  4 of 6 robustness checks passed.
+
+KEY LINE 3: the gap to the randomized trials can be explained
+  The trials point to about 0.8 pp. A hidden confounder 1.2 times as strong as the
+  diagnosis group would close the gap, robustness value 6%. Severity seen at the bedside and the
+  exclusion of patients who died within 48 hours are plausible candidates.

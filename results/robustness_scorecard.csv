@@ -1,0 +1,7 @@
+check,result,passed
+7.1 Placebo treatment,"placebo mean -0.15 pp, real effect p = 0.048",True
+7.2 Random common cause,largest shift 0.15 pp,True
+"7.3 Semi-synthetic, no effect","bias +0.66 pp, naive +4.0 pp",True
+7.4 Unmeasured confounding,"RV = 6%, trials reached by U of 1.2x the diagnosis group",False
+7.5 Trimming to 0.1 to 0.9,3.7 pp vs. 3.5 pp,True
+7.5 Nuisance models,6.8 pp logistic vs. 3.5 pp forest,False

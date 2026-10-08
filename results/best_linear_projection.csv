@@ -1,0 +1,7 @@
+,"coef, pp","se, pp",p,"ci_low, pp","ci_high, pp"
+const,3.5396,1.3059,0.0067,0.9801,6.099
+"APACHE score, per 10 points",0.5882,0.7799,0.4508,-0.9404,2.1167
+"age, per 10 years",0.9982,0.7457,0.1807,-0.4634,2.4598
+"mean blood pressure, per 10 mmHg",-0.2951,0.3689,0.4237,-1.0181,0.4278
+heart failure,1.6305,4.1997,0.6978,-6.6008,9.8617
+sepsis with multi-organ failure,4.3141,3.1329,0.1685,-1.8262,10.4545

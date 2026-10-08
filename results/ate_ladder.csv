@@ -1,0 +1,6 @@
+estimator,estimate,se,ci_low,ci_high
+Difference in means,0.0736,0.013,0.0483,0.099
+Direct: outcome model,0.0641,0.0147,0.0353,0.0929
+IPW: treatment model,0.0421,0.0235,-0.0039,0.0881
+AIPW: logistic regression,0.0676,0.0174,0.0335,0.1018
+AIPW: causal forest,0.0354,0.0131,0.0098,0.061
