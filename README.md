@@ -1,16 +1,16 @@
 # Causal Inference: Right Heart Catheterization and Mortality
 
-Does a right heart catheter on the first day of intensive care raise 30-day mortality? This project estimates the effect with causal machine learning on the SUPPORT data that Connors et al. analysed in 1996, and asks how much unmeasured confounding it would take to explain why randomized trials later found no effect.
+Does a right heart catheter on the first day of intensive care raise 30-day mortality? This project estimates the effect with causal machine learning on the SUPPORT data that Connors et al. analysed in 1996, and asks how much unmeasured confounding it would take to explain why randomized trials later found no clear effect.
 
 `Python` `Causal Inference` `Causal Forest` `EconML` `AIPW` `Overlap Weights` `Sensitivity Analysis`
 
-> **After adjustment, a catheter on day 1 goes with 3.5 percentage points higher 30-day mortality, 95% CI 1.0 to 6.1, about half the raw difference of 7.4 pp.** The size depends on the model: logistic regression gives 6.8 pp. A hidden confounder 1.2 times as strong as all recorded diagnosis variables would close the gap to the randomized trials, which found no effect.
+> **After adjustment, a catheter on day 1 goes with 3.5 percentage points higher 30-day mortality, 95% CI 1.0 to 6.1, about half the raw difference of 7.4 pp.** The size depends on the model: the doubly robust estimate with logistic models gives 6.8 pp, 95% CI 3.3 to 10.2. In a linear model, which estimates 6.2 pp, a hidden confounder 1.2 times as strong as all recorded diagnosis variables would close the gap to the randomized trials, which found no clear effect on mortality.
 
 ---
 
 ## Background
 
-Connors et al. found higher 30-day mortality among patients who received a catheter. An editorial called for a moratorium, and catheter use in the US fell by about two thirds between 1993 and 2004. Randomized trials, pooled in a meta-analysis in 2005, found no effect on mortality. Was the observational result real harm, or confounding by severity of illness?
+Connors et al. found higher 30-day mortality among patients who received a catheter. An editorial by Dalen and Bone called for a moratorium, and catheter use in the US fell by about two thirds between 1993 and 2004. Randomized trials, pooled in a meta-analysis in 2005, found no clear effect on mortality. Was the observational result real harm, or confounding by severity of illness?
 
 | Study | Design | Effect on mortality |
 |---|---|---|
@@ -38,7 +38,7 @@ Estimator ladder and published estimates:
 | AIPW: logistic regression | 6.8 | 1.7 | 3.3 to 10.2 |
 | **AIPW: causal forest** | **3.5** | **1.3** | **1.0 to 6.1** |
 | Connors et al. 1996, OR converted | 4.8 | | 0.6 to 9.1 |
-| Hirano and Imbens 2001 | 5.3 to 6.2 | | |
+| Hirano and Imbens 2001, one propensity model | 5.3 to 6.2 | | |
 | 13 RCTs, Shah et al. 2005, OR converted | 0.8 | | −2.2 to 4.0 |
 
 *Risk differences in 30-day mortality, percentage points. Published odds ratios were converted at the mortality without a catheter in the data, 30.6%.*
@@ -54,25 +54,25 @@ The notebook follows an eight-step causal ML pipeline.
 | **3. Estimand** | ATE primary, ATT for the comparison with Connors et al., overlap population for the comparison with the trials, CATE secondary. Target population: patients alive and in hospital two days after study entry |
 | **4. Assumptions** | SUTVA argued. 18% of patients outside propensity 0.1 to 0.9, largest IP weight 94. Overlap weights balance all 70 columns: largest ASMD 0.35 before, 0.013 after |
 | **5. Estimation** | Regression forests for the nuisances, causal forest with econml.grf, 2,000 trees, leaf size by R-loss. Doubly robust ATE, ATT and ATO, estimator ladder, comparison with three published estimates |
-| **6. Evaluation** | Calibration test, predicted against confirmed effects by quartile, RATE with split and score. None of them confirms heterogeneity |
-| **7. Robustness** | Placebo treatment, random common cause, semi-synthetic outcome with known effect, sensitivity to unmeasured confounding by Cinelli and Hazlett benchmarked against the trials, trimming and choice of nuisance models |
+| **6. Evaluation** | Calibration test, predicted against estimated effects by quartile, RATE with split and score. None of them confirms heterogeneity |
+| **7. Robustness** | Placebo treatment, random common cause, semi-synthetic outcome with known effect, sensitivity to unmeasured confounding by Cinelli and Hazlett on a linear model, benchmarked against confounder groups, trimming and choice of nuisance models |
 | **8. Interpretation** | Best linear projection, partial dependence and three patient profiles, all exploratory. Summary and limitations |
 
 ## Key Findings
 
-**The raw comparison overstates the harm by about half.** Patients with a catheter died more often, 38.0% against 30.6%, but they were sicker: higher APACHE scores, lower blood pressure, worse oxygenation and more often sepsis with multi-organ failure. After adjusting for 50 day-1 covariates, the causal forest estimates 3.5 pp.
+**The raw comparison mixes the catheter with severity.** Patients with a catheter died more often, 38.0% against 30.6%, but they were sicker: higher APACHE scores, lower blood pressure, worse oxygenation and more often sepsis with multi-organ failure. After adjusting for 50 day-1 covariates, the causal forest estimates 3.5 pp.
 
-**The direction is stable, the size is not.** All adjusted point estimates lie above zero, but they range from 3.5 to 6.8 pp. The two doubly robust estimators differ by 3.2 pp although their nuisance models fit equally well. IPW is unstable, because one patient gets a weight of 94.
+**The size depends on the model.** All adjusted point estimates lie above zero, but they range from 3.5 to 6.8 pp, and the IPW interval includes zero. The two doubly robust estimators differ by 3.2 pp although their nuisance models fit about equally well. IPW is unstable, because one patient gets a weight of 94.
 
 **Patients without a counterpart do not drive the result.** 18% of the patients have a propensity outside 0.1 to 0.9. The effect in the overlap population is 3.8 pp, after trimming 3.7 pp.
 
-**A realistic hidden confounder could explain the gap to the trials.** The linear estimate of 6.2 pp drops to the trials' 0.8 pp if an unmeasured confounder explains 5.3% of the remaining variance of both the catheter decision and death. That is 1.2 times the strength of all twelve diagnosis variables together. Severity that physicians saw at the bedside is a plausible candidate.
+**A hidden confounder somewhat stronger than all diagnosis variables could explain the gap to the trials.** The linear estimate of 6.2 pp drops to the trials' 0.8 pp if an unmeasured confounder explains 5.3% of the remaining variance of both the catheter decision and death. A confounder 1.2 times as strong as all twelve diagnosis variables together would do the same. The smaller forest estimate would need a weaker one. Severity that physicians saw at the bedside is a plausible candidate.
 
-**There is no detectable difference between patients.** Calibration test, quartile check and RATE are all null. The semi-synthetic test shows the limits: a slope of 2 pp per 10 APACHE points is found in only 3 of 5 runs. A larger effect in sicker and older patients is suggestive, not confirmed.
+**There is no detectable difference between patients.** Calibration test, quartile check and RATE are all null. The semi-synthetic test shows the limits: a slope of 2 pp per 10 APACHE points is found in only 3 of 5 runs. A larger effect in sicker patients is suggestive, not confirmed.
 
 ## Visualisations
 
-Estimator ladder and published estimates. Every adjustment lowers the raw difference, but only the causal forest comes close to the confidence interval of the trials, the grey band.
+Estimator ladder and published estimates. Every adjustment lowers the raw difference, but only the causal forest estimates lie inside the confidence interval of the trials, the grey band.
 
 <img src="figures/fig05b_estimates.png" alt="Estimator ladder and published estimates with 95% confidence intervals" width="900">
 
@@ -80,7 +80,7 @@ Overlap. Many patients without a catheter had almost no chance of getting one, w
 
 <img src="figures/fig04a_overlap.png" alt="Propensity scores by treatment group" width="900">
 
-Sensitivity to unmeasured confounding. A hidden confounder somewhat stronger than all diagnosis variables together would move the estimate to the level of the trials.
+Sensitivity to unmeasured confounding. A hidden confounder somewhat stronger than all diagnosis variables together would move the linear estimate of 6.2 pp to the level of the trials.
 
 <img src="figures/fig07c_sensitivity_contour.png" alt="Sensitivity contour plot with benchmarks" width="900">
 
@@ -109,17 +109,18 @@ One seed, 42, controls all forests, splits, permutations and bootstraps. Forest-
 
 ## Limitations
 
-- Unconfoundedness cannot be tested. A hidden confounder about as strong as the recorded diagnosis would explain the whole gap to the trials.
+- Unconfoundedness cannot be tested. In the linear model of the sensitivity analysis, a hidden confounder 1.2 times as strong as all recorded diagnosis variables could explain the whole gap to the trials, and the smaller forest estimate would need a weaker one.
 - SUPPORT excluded patients who died or left the hospital within 48 hours. The direction of the resulting bias is unknown.
-- The size of the effect depends on the nuisance models: 3.5 pp with forests, 6.8 pp with logistic regression.
+- The size of the effect depends on the nuisance models: 3.5 pp with forest nuisance models, 6.8 pp with logistic ones.
 - Covariates were recorded around the time of the decision. Values measured after the catheter was placed could already reflect it.
-- The data describe catheter use in five US teaching hospitals around 1990. The trials enrolled other patients, and practice has changed since.
+- The data describe catheter use in five US teaching hospitals between 1989 and 1994. The trials enrolled other patients, and practice has changed since.
 - Published odds ratios were converted at the baseline risk of this data set, so the comparison is approximate.
 - With a 0/1 outcome and 5,735 patients, the null result for heterogeneity means differences are not detectable, not that the effect is the same for everyone.
 
 ## References
 
 - Connors AF, Speroff T, Dawson NV, et al. The effectiveness of right heart catheterization in the initial care of critically ill patients. JAMA 1996;276:889–897.
+- Dalen JE, Bone RC. Is it time to pull the pulmonary artery catheter? JAMA 1996;276:916–918.
 - Hirano K, Imbens GW. Estimation of causal effects using propensity score weighting: an application to data on right heart catheterization. Health Services and Outcomes Research Methodology 2001;2:259–278.
 - Shah MR, Hasselblad V, Stevenson LW, et al. Impact of the pulmonary artery catheter in critically ill patients: meta-analysis of randomized clinical trials. JAMA 2005;294:1664–1670.
 - Wiener RS, Welch HG. Trends in the use of the pulmonary artery catheter in the United States, 1993–2004. JAMA 2007;298:423–429.
