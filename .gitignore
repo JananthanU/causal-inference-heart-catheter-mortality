@@ -211,3 +211,6 @@ __marimo__/
 
 # Downloaded data (fetched by the notebook, not redistributed)
 data/
+
+# Private notes and background document, not part of the repository
+docs/
