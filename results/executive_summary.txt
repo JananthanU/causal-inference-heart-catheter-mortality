@@ -8,11 +8,12 @@ KEY LINE 1: the raw comparison overstates the harm
   Raw difference 7.4 pp. Catheter patients were sicker, the largest ASMD before weighting is
   0.35, after overlap weighting every ASMD is below 0.013.
 
-KEY LINE 2: the size depends on the model, the direction does not
+KEY LINE 2: the size depends on the model
   4 adjusted estimators between 3.5 and 6.8 pp, all point estimates above zero.
   4 of 6 robustness checks passed.
 
-KEY LINE 3: the gap to the randomized trials can be explained
-  The trials point to about 0.8 pp. A hidden confounder 1.2 times as strong as the
-  diagnosis group would close the gap, robustness value 6%. Severity seen at the bedside and the
-  exclusion of patients who died within 48 hours are plausible candidates.
+KEY LINE 3: a hidden confounder could explain the gap to the trials
+  The trials point to about 0.8 pp. In the linear model, 6.2 pp,
+  a hidden confounder 1.2 times as strong as the diagnosis group would close the gap,
+  robustness value 5%. Severity seen at the bedside is a plausible candidate.
+  The exclusion of patients who died or left the hospital within 48 hours may bias the estimate either way.
