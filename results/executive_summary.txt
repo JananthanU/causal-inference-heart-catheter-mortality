@@ -10,7 +10,7 @@ KEY LINE 1: the raw comparison overstates the harm
 
 KEY LINE 2: the size depends on the model
   4 adjusted estimators between 3.5 and 6.8 pp, all point estimates above zero.
-  4 of 6 robustness checks passed.
+  3 of 6 robustness checks passed.
 
 KEY LINE 3: a hidden confounder could explain the gap to the trials
   The trials point to about 0.8 pp. In the linear model, 6.2 pp,
