@@ -25,7 +25,7 @@ Connors et al. found higher 30-day mortality among patients who received a cathe
 | Effect among patients with a catheter, ATT | 4.0 pp, 95% CI 1.3 to 6.6 |
 | Effect in the overlap population, ATO | 3.8 pp, 95% CI 1.3 to 6.2 |
 | Randomized trials, converted | 0.8 pp, 95% CI −2.2 to 4.0 |
-| Robustness checks passed | **4 of 6** |
+| Robustness checks passed | **3 of 6** |
 | Effect heterogeneity | Not detectable, calibration test β = 0.24, one-sided p = 0.39 |
 
 Estimator ladder and published estimates:
@@ -68,7 +68,7 @@ The notebook follows an eight-step causal ML pipeline.
 
 **A hidden confounder somewhat stronger than all diagnosis variables could explain the gap to the trials.** The linear estimate of 6.2 pp drops to the trials' 0.8 pp if an unmeasured confounder explains 5.3% of the remaining variance of both the catheter decision and death. A confounder 1.2 times as strong as all twelve diagnosis variables together would do the same. The smaller forest estimate would need a weaker one. Severity that physicians saw at the bedside is a plausible candidate.
 
-**There is no detectable difference between patients.** Calibration test, quartile check and RATE are all null. The semi-synthetic test shows the limits: a slope of 2 pp per 10 APACHE points is found in only 3 of 5 runs. A larger effect in sicker patients is suggestive, not confirmed.
+**There is no detectable difference between patients.** Calibration test, quartile check and RATE are all null. The semi-synthetic test shows the limits: with a slope of 2 pp per 10 APACHE points built in, the calibration test detects it in only 5 of 20 runs and the best linear projection in 8 of 20. A larger effect in sicker patients is suggestive, not confirmed.
 
 ## Visualizations
 
@@ -84,9 +84,9 @@ Sensitivity to unmeasured confounding. A hidden confounder somewhat stronger tha
 
 <img src="figures/fig07c_sensitivity_contour.png" alt="Sensitivity contour plot with benchmarks" width="900">
 
-Robustness scorecard. The pipeline passes placebo, noise, semi-synthetic and trimming checks. The size of the effect depends on the nuisance models, and the gap to the trials is sensitive to hidden confounding.
+Robustness scorecard. The pipeline passes the placebo, noise and trimming checks. In simulated data without an effect a bias of 0.9 pp remains, so the main estimate may be somewhat too high. The size of the effect depends on the nuisance models, and the gap to the trials is sensitive to hidden confounding.
 
-<img src="figures/fig07d_robustness_scorecard.png" alt="Robustness scorecard, 4 of 6 checks passed" width="900">
+<img src="figures/fig07d_robustness_scorecard.png" alt="Robustness scorecard, 3 of 6 checks passed" width="900">
 
 All 17 figures are in [`figures/`](figures), the key numbers as JSON and CSV in [`results/`](results).
 
