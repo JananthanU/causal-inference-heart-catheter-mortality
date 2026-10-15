@@ -1,6 +1,6 @@
 # Causal Inference: Right Heart Catheterization and Mortality
 
-Does a right heart catheter on the first day of intensive care raise 30-day mortality? This project estimates the effect with causal machine learning on the SUPPORT data that Connors et al. analysed in 1996, and asks how much unmeasured confounding it would take to explain why randomized trials later found no clear effect.
+Does a right heart catheter on the first day of intensive care raise 30-day mortality? This project estimates the effect with causal machine learning on the SUPPORT data that Connors et al. analyzed in 1996, and asks how much unmeasured confounding it would take to explain why randomized trials later found no clear effect.
 
 `Python` `Causal Inference` `Causal Forest` `EconML` `AIPW` `Overlap Weights` `Sensitivity Analysis`
 
@@ -70,9 +70,9 @@ The notebook follows an eight-step causal ML pipeline.
 
 **There is no detectable difference between patients.** Calibration test, quartile check and RATE are all null. The semi-synthetic test shows the limits: a slope of 2 pp per 10 APACHE points is found in only 3 of 5 runs. A larger effect in sicker patients is suggestive, not confirmed.
 
-## Visualisations
+## Visualizations
 
-Estimator ladder and published estimates. Every adjustment lowers the raw difference, but only the causal forest estimates lie inside the confidence interval of the trials, the grey band.
+Estimator ladder and published estimates. Every adjustment lowers the raw difference, but only the causal forest estimates lie inside the confidence interval of the trials, the gray band.
 
 <img src="figures/fig05b_estimates.png" alt="Estimator ladder and published estimates with 95% confidence intervals" width="900">
 
